@@ -5,41 +5,49 @@ List Notes
 {% endblock %}
 
 {% block content %}
-<h1>This Is A List Of All Notes Created</h1>
 <h2>Notes List</h2>
 
-<ul>
+<div class="card-deck">
     {% for note in notes %}
-
-    <li>
-        <div>
-            {{note.title}}
-            {{note.content}}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{note.title}}</h4>
+            <p class="card-text">{{note.content}}</p>
+        </div>
+        <div class="card-footer">
+            <p class="card-text">
+                <small class="text-muted">
+                    {{note.created_at}}
+                </small>
+            </p>
         </div>
         <div>
-            {{note.created_at}}
         </div>
-    </li>
+    </div>
     {% endfor %}
+</div>
 
-    <div class="pagination">
-        <span class="step-links">
-            {% if notes.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ notes.previous_page_number }}">previous</a>
-            {% endif %}
+<nav aria-label="Page navigation example">
+    <ul class="pagination pg-blue justify-content-center">
+        {% if notes.has_previous %}
+        <li class="page-item">
+            <a class="page-link" tabindex="-1" href="?page={{ notes.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
 
-            <span class="current">
-                Page {{ notes.number }} of {{ notes.paginator.num_pages }}.
-            </span>
+
+        <li class="page-item">
+            <a class="page-link">Page {{ notes.number }} of {{ notes.paginator.num_pages }}</a>
+        </li>
+        <span class="current">
 
             {% if notes.has_next %}
-            <a href="?page={{ notes.next_page_number }}">next</a>
-            <a href="?page={{ notes.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
+            <li class="page-item">
+                <a class="page-link" tabindex="-1" href="?page={{ notes.next_page_number }}">Next</a>
+                {% endif %}
         </span>
-    </div>
-</ul>
+    </ul>
+</nav>
 {% endblock content %}
 
 

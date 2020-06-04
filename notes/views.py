@@ -13,7 +13,7 @@ def list(request):
     else:
         notes = Note.objects.all().order_by('created_at')
     
-    paginator = Paginator(notes, 5)
+    paginator = Paginator(notes, 3)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request,'notes/list.html',{'notes':page_obj})
