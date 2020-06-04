@@ -20,6 +20,20 @@
 <body>
     <h1>This Is A List Of All Notes Created</h1>
     <h2>Notes List</h2>
+
+    <ul>
+        {% for note in notes %}
+        <li>
+            <div>
+                {{note.title}}
+                {{note.content}}
+            </div>
+            <div>
+                {{note.created_at}}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 </body>
 
 </html>
