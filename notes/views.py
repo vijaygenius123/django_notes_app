@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 
 
 from .models import Note
@@ -6,9 +7,16 @@ from .forms import NoteForm
 
 # Create your views here.
 def list(request):
-    notes = Note.objects.all()
-
-    return render(request,'notes/list.html',{'notes':notes})
+    published = request.GET.get('published')
+    if published:
+        notes = Note.objects.filter(published=True).order_by('created_at')
+    else:
+        notes = Note.objects.all().order_by('created_at')
+    
+    paginator = Paginator(notes, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request,'notes/list.html',{'notes':page_obj})
 
 def create(request):
     if request.method == 'POST':
